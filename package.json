@@ -1,0 +1,29 @@
+{
+  "name": "delta-to-html",
+  "version": "0.1.0",
+  "description": "Delta to Html converter",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine test/**/*.js",
+    "test:coverage": "istanbul cover jasmine test/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joostory/delta-to-html.git"
+  },
+  "keywords": [
+    "quill",
+    "delta"
+  ],
+  "author": "Joo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joostory/delta-to-html/issues"
+  },
+  "homepage": "https://github.com/joostory/delta-to-html#readme",
+  "devDependencies": {
+    "deep-equal": "^1.0.1",
+    "jasmine": "^2.5.2"
+  },
+  "dependencies": {}
+}
