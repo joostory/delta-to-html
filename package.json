@@ -22,8 +22,10 @@
   },
   "homepage": "https://github.com/joostory/delta-to-html#readme",
   "devDependencies": {
-    "deep-equal": "^1.0.1",
+    "istanbul": "^0.4.5",
     "jasmine": "^2.5.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "deep-equal": "^1.0.1"
+  }
 }
