@@ -27,7 +27,7 @@ var convert = function(value, attributes) {
         } else if (attributes['blockquote']) {
             return wrapTag("blockquote", value)
         } else if (attributes['list']) {
-            return wrapTag(attributes['list'] == 'ordered'? 'ol':'ul', value.map(item => wrapTag('li', item)).join(""))
+            return wrapTag(attributes['list'] == 'ordered'? 'ol':'ul', value.map(function(item) { return wrapTag('li', item )}).join(""))
         }
     }
 
