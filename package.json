@@ -28,6 +28,7 @@
     "jasmine": "^2.5.2"
   },
   "dependencies": {
-    "deep-equal": "^1.0.1"
+    "deep-equal": "^1.0.1",
+    "quill-delta-markdown": "0.0.0"
   }
 }
