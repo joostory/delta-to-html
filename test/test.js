@@ -182,4 +182,14 @@ describe('delta-to-html', () => {
             })).toBe('<p>안녕하세요? <b>반</b>갑<i>습</i>니<code>다</code>.</p><p>console.log(\'hello, world!\')</p><ol><li>반갑습니다.</li><li>반가워요</li></ol><p></p><ul><li>오늘은 여기까지.</li><li>한번만 더</li></ul><p></p><p>정말 여기까지</p>')
         })
     })
+
+	describe('escape', () => {
+		it('#tag', () => {
+			expect(deltaToHtml({
+				ops: [
+					{insert:'<pre>',attributes:{code:true}}
+				]
+			})).toBe("<p><code>&lt;pre&gt;</code></p>")
+		})
+	})
 })

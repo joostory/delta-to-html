@@ -1,5 +1,14 @@
 var equal = require('deep-equal')
 
+var escapeHtml = function(unsafe) {
+    if (unsafe) {
+
+    }
+    return unsafe
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+}
+
 var wrapTag = function(tag, value, attrs) {
     return "<" + tag + attrsToString(attrs) + ">" + value + "</" + tag + ">"
 }
@@ -72,7 +81,7 @@ DeltaConverter.prototype.addItem = function(insert, attributes) {
             }
         }
 
-        this.current.value += convertInline(insert, attributes)
+        this.current.value += convertInline(escapeHtml(insert), attributes)
 
     } else if (insert.image) {
         this.current.value += singleTag("img", {
