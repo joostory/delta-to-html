@@ -21,15 +21,35 @@ var attrsToString = function(attrs) {
 var convert = function(value, attributes) {
     if (attributes) {
         if (attributes['code-block']) {
-            return wrapTag("pre", wrapTag("code", value))
+            return wrapTag("pre", wrapTag("code", value.join("\n").trim()))
         } else if (attributes['header']) {
             return wrapTag("h" + attributes['header'], value)
         } else if (attributes['blockquote']) {
             return wrapTag("blockquote", value)
+        } else if (attributes['list']) {
+            return wrapTag(attributes['list'] == 'ordered'? 'ol':'ul', value.map(item => wrapTag('li', item)).join(""))
         }
     }
 
     return wrapTag("p", value)
+}
+
+var convertInline = function(insert, attributes) {
+    if (attributes) {
+        if (attributes['bold']) {
+            return wrapTag("b", insert)
+        } else if (attributes['link']) {
+            return wrapTag("a", insert, {
+                "href": attributes.link
+            })
+        } else if (attributes['code']) {
+            return wrapTag("code", insert)
+        } else if (attributes['italic']) {
+            return wrapTag('i', insert)
+        }
+    }
+
+    return insert
 }
 
 var DeltaConverter = function(delta) {
@@ -44,7 +64,7 @@ var DeltaConverter = function(delta) {
 DeltaConverter.prototype.addItem = function(insert, attributes) {
     if (typeof insert === 'string' || insert instanceof String) {
         if (insert.indexOf('\n') >= 0) {
-            if (equal(this.current.attributes, attributes) && attributes && attributes['code-block'] && insert == "\n") {
+            if (equal(this.current.attributes, attributes) && attributes && (attributes['code-block'] || attributes['list']) && insert == "\n") {
 
             } else {
                 this.convertPrevious()
@@ -52,23 +72,7 @@ DeltaConverter.prototype.addItem = function(insert, attributes) {
             }
         }
 
-        if (attributes) {
-            if (attributes.bold) {
-                this.current.value += wrapTag("b", insert)
-                return
-            } else if (attributes.link) {
-                this.current.value += wrapTag("a", insert, {
-                    "href": attributes.link
-                })
-                return
-            } else if (attributes.code) {
-                this.current.value += wrapTag("code", insert)
-                return
-            }
-        }
-
-        this.current.value += insert
-        // this.current.attributes = attributes
+        this.current.value += convertInline(insert, attributes)
 
     } else if (insert.image) {
         this.current.value += singleTag("img", {
@@ -82,12 +86,12 @@ DeltaConverter.prototype.convertPrevious = function() {
         var values = this.current.value.split('\n'),
             length = values.length;
 
-        if (this.current.attributes && this.current.attributes['code-block']) {
-            var codeBlockValues = []
+        if (this.current.attributes && (this.current.attributes['code-block'] || this.current.attributes['list'])) {
+            var blockValues = []
             for (var i = 0; i < length - 1; i++) {
-                codeBlockValues.push(values[i])
+                blockValues.push(values[i])
             }
-            this.results += convert(codeBlockValues.join("\n").trim(), this.current.attributes)
+            this.results += convert(blockValues, this.current.attributes)
         } else {
             for (var i = 0; i < length - 1; i++) {
                 this.results += convert(values[i], this.current.attributes)
@@ -102,12 +106,12 @@ DeltaConverter.prototype.convertRemain = function() {
         var values = this.current.value.split('\n'),
             length = values.length,
             results = ""
-        if (this.current.attributes && this.current.attributes['code-block']) {
-            var codeBlockValues = []
+        if (this.current.attributes && (this.current.attributes['code-block'] || this.current.attributes['list'])) {
+            var blockValues = []
             for (var i = 0; i < length; i++) {
-                codeBlockValues.push(values[i])
+                blockValues.push(values[i])
             }
-            results += convert(codeBlockValues.join("\n").trim(), this.current.attributes)
+            results += convert(blockValues, this.current.attributes)
         } else {
             for (var i = 0; i < length; i++) {
                 if (i == length - 1 && !values[i]) {

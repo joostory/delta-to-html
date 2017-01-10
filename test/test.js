@@ -62,6 +62,15 @@ describe('delta-to-html', () => {
                 ]
             })).toBe("<p>Hello<code>World</code></p>")
         })
+
+        it('#italic', () => {
+            expect(deltaToHtml({
+                ops: [
+                    { insert: 'Hello,' },
+                    { insert: 'world!', attributes: { italic:true }}
+                ]
+            })).toBe('<p>Hello,<i>world!</i></p>')
+        })
     })
 
     describe('block attributes', () => {
@@ -147,6 +156,30 @@ describe('delta-to-html', () => {
                     }
                 }]
             })).toBe("<p><img src='http://test.com/image.png'></p>")
+        })
+    })
+
+    describe('mixed', () => {
+        it('#sample', () => {
+            expect(deltaToHtml({
+                "ops":[
+                    {"insert":"안녕하세요? "},
+                    {"attributes":{"bold":true},"insert":"반"},
+                    {"insert":"갑"},
+                    {"attributes":{"italic":true},"insert":"습"},
+                    {"insert":"니"},
+                    {"attributes":{"code":true},"insert":"다"},
+                    {"insert":".\nconsole.log('hello, world!')\n반갑습니다."},
+                    {"attributes":{"list":"ordered"},"insert":"\n"},
+                    {"insert":"반가워요"},
+                    {"attributes":{"list":"ordered"},"insert":"\n"},
+                    {"insert":"\n오늘은 여기까지."},
+                    {"attributes":{"list":"bullet"},"insert":"\n"},
+                    {"insert":"한번만 더"},
+                    {"attributes":{"list":"bullet"},"insert":"\n"},
+                    {"insert":"\n정말 여기까지\n"}
+                ]
+            })).toBe('<p>안녕하세요? <b>반</b>갑<i>습</i>니<code>다</code>.</p><p>console.log(\'hello, world!\')</p><ol><li>반갑습니다.</li><li>반가워요</li></ol><p></p><ul><li>오늘은 여기까지.</li><li>한번만 더</li></ul><p></p><p>정말 여기까지</p>')
         })
     })
 })
