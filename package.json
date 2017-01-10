@@ -1,8 +1,8 @@
 {
   "name": "delta-to-html",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Delta to Html converter",
-  "main": "index.js",
+  "main": "src/delta-to-html.js",
   "scripts": {
     "test": "jasmine test/**/*.js",
     "test:coverage": "istanbul cover jasmine test/**/*.js",
@@ -28,7 +28,6 @@
     "jasmine": "^2.5.2"
   },
   "dependencies": {
-    "deep-equal": "^1.0.1",
-    "quill-delta-markdown": "0.0.0"
+    "deep-equal": "^1.0.1"
   }
 }
