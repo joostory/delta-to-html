@@ -23,9 +23,9 @@
   },
   "homepage": "https://github.com/joostory/delta-to-html#readme",
   "devDependencies": {
-    "coveralls": "^2.11.15",
+    "coveralls": "^3.0.0",
     "istanbul": "^0.4.5",
-    "jasmine": "^2.5.2"
+    "jasmine": "^2.8.0"
   },
   "dependencies": {
     "deep-equal": "^1.0.1"
