@@ -157,6 +157,20 @@ describe('delta-to-html', () => {
                 }]
             })).toBe("<p><img src='http://test.com/image.png'></p>")
         })
+
+        it('#video', () => {
+            expect(deltaToHtml({
+                ops: [{
+                    attributes: {
+                        width: '560',
+                        height: '315'
+                    },
+                    insert: {
+                        video: 'https://www.youtube.com/embed/2YJppF-WsIA'
+                    }
+                }]
+            })).toBe("<p><iframe src='https://www.youtube.com/embed/2YJppF-WsIA' width='560' height='315'></iframe></p>")
+        })
     })
 
     describe('mixed', () => {

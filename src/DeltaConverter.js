@@ -87,6 +87,12 @@ DeltaConverter.prototype.addItem = function(insert, attributes) {
         this.current.value += singleTag("img", {
             "src": insert.image
         })
+    } else if (insert.video) {
+        this.current.value += wrapTag("iframe", '', {
+            "src": insert.video,
+            "width": attributes.width,
+            "height": attributes.height
+        })
     }
 }
 
