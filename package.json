@@ -1,6 +1,6 @@
 {
   "name": "delta-to-html",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Delta to Html converter",
   "main": "src/delta-to-html.js",
   "scripts": {
